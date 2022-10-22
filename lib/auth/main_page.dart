@@ -1,0 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import '../pages/home_page.dart';
+import 'auth_page.dart';
+
+class Mainpage extends StatefulWidget {
+  const Mainpage({Key? key}) : super(key: key);
+
+  @override
+  State<Mainpage> createState() => _MainpageState();
+}
+
+class _MainpageState extends State<Mainpage> {
+  //esta pagina define si inicia en el login principal.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot){
+          if(snapshot.hasData)  {
+            return const Homepage();
+          }else{
+            return const AuthPage();
+          }
+        },
+      ),
+    );
+  }
+}
+
